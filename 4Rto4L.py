@@ -7,7 +7,7 @@ import time
 import sys
 
 if len(sys.argv) != 2:
-	print "usage: python 4Lto4R.py <VM password>"
+	print "usage: python 4Rto4L.py <VM password>"
 	sys.exit()
 password = sys.argv[1]
 
