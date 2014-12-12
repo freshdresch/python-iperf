@@ -1,0 +1,10 @@
+The format of the folder naming is as follows:
+	The first number represents how many clients there are in the experiment.
+	The letter 'L' distinguishes that the clients are running on the same machine, 
+	and the 'R' distinguishes that they are running on different machines. Literally,
+	L = local and R = remote.
+
+	The second number represents how many servers are running for the experiment,
+	and the letters hold the same meaning. Lastly, we distinguish any other necessary
+	details for the test after the underscore. For example, tcp means that it was a tcp 
+	test as opposed to a udp test.
