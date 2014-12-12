@@ -9,11 +9,11 @@ inFile = sys.argv[1]
 outFile = sys.argv[2]
 
 data = []
-legend = ['Bits Per Second', 'Bytes', 'Interval 1', 'Interval 2', 'Interval 3', 'Interval 4', 'Interval 5']
+legend = ['Bits Per Second', 'Bytes', 'Interval 1', 'Interval 2', 'Interval 3', 'Interval 4', 'Interval 5', 'Interval 6']
 
 par = Parser()
 par.extract(inFile)
-data.append([par.bps, par.bytes, par.intervalBPS[0], par.intervalBPS[1], par.intervalBPS[2], par.intervalBPS[3], par.intervalBPS[4]])
+data.append([par.bps, par.bytes, par.intervalBPS[0], par.intervalBPS[1], par.intervalBPS[2], par.intervalBPS[3], par.intervalBPS[4], par.intervalBPS[5]], )
 
 
 # test if file already exists before we open it

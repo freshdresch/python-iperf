@@ -1,10 +1,7 @@
 # Assumes the output file is already in the folder
-# For each file, we want the total bits per second, MSS, interval 1-5 bits per second, host cpu utilization, and remote cpu utilization
-
+from math import floor
 import json
 import sys
-from math import floor
-from pprint import pprint
 
 class Parser:
     """ A class to extract any useful information from the iperf3
