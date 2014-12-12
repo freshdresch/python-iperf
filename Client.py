@@ -40,7 +40,7 @@ class Client:
 			command = ["sshpass", "-p"+self.password, "ssh", "-n", self.host, \
 					   self.tool, "-c", target[0], "-t", runtime, "-i", \
 					   interval, "-p", target[1]]
-			logstring = "-J --logfile=" + self.host + .json
+			logstring = "-J --logfile=" + self.host + ".json"
 			print logstring
 			command.append(logstring)
 
