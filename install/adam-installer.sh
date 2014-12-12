@@ -16,5 +16,7 @@ while read vmName vmHostname; do
      sshpass -p$1 scp tools.sh $vmHostname:~/
      sshpass -p$1 scp iperf.tar.gz $vmHostname:~/
      sshpass -p$1 ssh -n $vmHostname chmod 777 tools.sh
-     sshpass -p$1 ssh -n $vmHostname ./tools.sh $1
+     sshpass -p$1 ssh -n $vmHostname ./tools.sh $1 &
 done < /users/onl/experiments/$LOGNAME
+
+wait
