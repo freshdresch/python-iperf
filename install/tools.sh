@@ -1,10 +1,7 @@
 #! /bin/bash
-## install iperf (version 2)
-echo $1 | sudo -S sudo DEBIAN_FRONTEND=noninteractive apt-get -y install iperf
-
-## install and configure iperf3
-tar zxf iperf.tar.gz
-cd iperf
+echo $1 | sudo -S sudo DEBIAN_FRONTEND=noninteractive apt-get -y install sysstat
+tar xf iperf-3.0.11.tar
+cd iperf-3.0.11
 ./configure
 make
 echo $1 | sudo -S make install
