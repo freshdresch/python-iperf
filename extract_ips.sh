@@ -1,4 +1,5 @@
 #! /bin/bash
+source /users/onl/.topology
 
 if [ $# -ne 1 ]
 then
