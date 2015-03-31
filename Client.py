@@ -9,9 +9,7 @@ class Client:
 		self.host = host
 		self.addr = addr
 		self.password = password
-
 		self.targets = []
-		self.tool = "iperf3"
 		self.test = ""
 		
 		# UDP specific options
@@ -21,9 +19,6 @@ class Client:
 	def setTarget(self,addr,port):
 		self.targets.append((addr,port))
 	
-	def setTool(self, tool):
-		self.tool = tool
-
 	def setType(self, test):
 		self.test = test.lower()
 		
@@ -33,25 +28,36 @@ class Client:
 	def setUdpOptions(self, bandwidth, packetlen=""):
 		self.bandwidth = bandwidth
 		self.packetlen = packetlen
+
+	def setTcpOptions(self, packetlen=""):
+		self.packetlen = packetlen
 		
-	def run(self, interval, runtime):
+	def run(self, runtime):
 		procs = []
 		for target in self.targets:
-			command = ["sshpass", "-p"+self.password, "ssh", "-n", self.host, \
-					   self.tool, "-c", target[0], "-t", runtime, "-i", \
-					   interval, "-p", target[1]]
-			# logstring = "-J --logfile=" + self.host + ".json"
-			# print logstring
-			# command.append(logstring)
-
-			
-			if self.test is "udp":
-				command.append("-u")
-				command.append("-b")
-				command.append(self.bandwidth)
-				if self.packetlen:
-					command.append("-l")
+			command = [ 'sshpass', '-p'+self.password, 'ssh', '-n', self.host, \
+						'iperf3', '-c', target[0], '-p', target[1] ]
+			# logstring = '-J > ' + self.host + '.json\"'
+			if self.test == 'udp':
+				command.append('-t')
+				command.append(str(runtime))
+				command.append('-u')
+				command.append('-b')
+				command.append(str(self.bandwidth))
+				if self.packetlen: 
+					command.append('-l')
 					command.append(self.packetlen)
+			else: ## tcp
+				command.append('-t')
+				command.append(str(runtime + 2))
+				command.append('-O')
+				command.append(str(2))
+				if self.packetlen:
+					command.append('-M')
+					command.append(self.packetlen)
+			# command.append('\"')
+			# command.append(logstring)
+			print " ".join(map(str, command))
 
 			p = subprocess.Popen(command)
 			procs.append(p)

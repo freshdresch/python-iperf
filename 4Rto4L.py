@@ -42,8 +42,8 @@ cli2.setTarget("192.168.2.6", "5201")
 cli3 = Client("vm12c13v01", "192.168.2.3", password)
 cli3.setTarget("192.168.2.8", "5201")
 
-cli4 = Client("vm12c14v01", "192.168.2.4", password)
-cli1.setTarget("192.168.2.7", "5201")
+cli4 = Client("vm12c09v01", "192.168.2.4", password)
+cli4.setTarget("192.168.2.7", "5201")
 
 thread1 = threading.Thread(target=partial(cli1.run, "5", "30"))
 thread2 = threading.Thread(target=partial(cli2.run, "5", "30"))
