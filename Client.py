@@ -35,8 +35,7 @@ class Client:
 	def run(self, runtime):
 		procs = []
 		for target in self.targets:
-			command = [ 'sshpass', '-p'+self.password, 'ssh', '-n', self.host, \
-						'iperf3', '-c', target[0], '-p', target[1] ]
+			command = [ 'ssh', '-n', self.host, 'iperf3', '-c', target[0], '-p', target[1] ]
 			# logstring = '-J > ' + self.host + '.json\"'
 			if self.test == 'udp':
 				command.append('-t')

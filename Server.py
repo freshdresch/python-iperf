@@ -22,8 +22,8 @@ class Server:
 		self.ports.append(port)
 
 	def start(self, interval=''):
-		command = ['sshpass','-p'+self.password, 'ssh', '-n', self.host]
-		command.append('iperf3 -s')
+		command = ['ssh', '-n', self.host, 'iperf3', '-s', '-D']
+		# command.append('iperf3 -s')
 		if interval:
 			command.append('-i' + str(interval))
 		command.append('-p')
@@ -38,6 +38,6 @@ class Server:
 				command.pop(start)
 
 	def stop(self):
-		command = ["sshpass", "-p"+self.password, "ssh", "-n", self.host, "pkill", "iperf3"]
+		command = ["ssh", "-n", self.host, "pkill", "iperf3"]
 		subprocess.Popen(command)
 		print ' '.join(map(str, command))
