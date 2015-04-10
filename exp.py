@@ -3,7 +3,7 @@
 from Client import *
 from Server import *
 
-## systems code for threading, ideally will be replaced  with asynchronous
+## systems code for threading, ideally will be replaced with asynchronous
 from functools import partial
 import threading
 import sys
@@ -11,11 +11,6 @@ import sys
 ## timing code
 from timeit import default_timer as timer
 import time
-
-if len(sys.argv) != 2:
-	print "usage: python 11Rto11L.py <VM password>"
-	sys.exit()
-password = sys.argv[1]
 
 vms = {}
 with open("hosts.log") as f:
@@ -28,23 +23,31 @@ srvmap = {}
 for key, value in vms.iteritems():   # iter on both keys and values
 	if key.startswith('vm12c12'):
 		srvmap[key] = value
+		# climap[key] = value
 	else:
 		climap[key] = value
+		# srvmap[key] = value
 
 clients = []
 servers = []
 threads = []
 
-for key in srvmap:
-	srv = Server(key, srvmap[key], password)
+numPairs = 2
+for idx, key in enumerate(srvmap):
+	if idx >= numPairs: continue
+	srv = Server(key, srvmap[key])
 	srv.listen("5201")
 	srv.start()
 	servers.append(srv)
 
 srvlist = srvmap.items()
 for idx, key in enumerate(climap):
-	cli = Client(key, climap[key], password)
+	if idx >= numPairs: continue
+	cli = Client(key, climap[key])
 	cli.setTarget(srvlist[idx][1], "5201")
+	cli.setType("udp")
+	# cli.setUdpOptions("495m")
+	cli.setUdpOptions("495m","1400")
 	clients.append(cli)
 	print key,climap[key] + " sends to " + srvlist[idx][0],srvlist[idx][1]
 

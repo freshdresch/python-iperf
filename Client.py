@@ -1,14 +1,12 @@
 import subprocess
 
 class Client:
-	""" A network testing client that can initiate 
-	multiple TCP or UDP tests with multiple servers,
-	using iperf or iperf3. We assume iperf3 by default. """
+	""" A network testing client built on iperf3 that can initiate 
+	multiple TCP or UDP tests with multiple servers. """
 
-	def __init__(self, host, addr, password=""):
+	def __init__(self, host, addr):
 		self.host = host
 		self.addr = addr
-		self.password = password
 		self.targets = []
 		self.test = ""
 		
@@ -21,9 +19,6 @@ class Client:
 	
 	def setType(self, test):
 		self.test = test.lower()
-		
-	def setPassword(self, password):
-		self.password = password
 
 	def setUdpOptions(self, bandwidth, packetlen=""):
 		self.bandwidth = bandwidth
@@ -37,6 +32,8 @@ class Client:
 		for target in self.targets:
 			command = [ 'ssh', '-n', self.host, 'iperf3', '-c', target[0], '-p', target[1] ]
 			# logstring = '-J > ' + self.host + '.json\"'
+			command.append('-i')
+			command.append('0')
 			if self.test == 'udp':
 				command.append('-t')
 				command.append(str(runtime))
@@ -54,9 +51,13 @@ class Client:
 				if self.packetlen:
 					command.append('-M')
 					command.append(self.packetlen)
+				command.append('-C')
+				command.append('cubic')
+				command.append('-l')
+				command.append('1400')
 			# command.append('\"')
 			# command.append(logstring)
-			print " ".join(map(str, command))
+			# print " ".join(map(str, command))
 
 			p = subprocess.Popen(command)
 			procs.append(p)
